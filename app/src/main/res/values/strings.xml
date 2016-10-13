@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GLMCoupons</string>
+    <string name="app_name">GLM Deals</string>
 
     <string name="prompt_email">Username</string>
     <string name="prompt_password">Password</string>

@@ -3,7 +3,6 @@ package com.infinium.glmcoupons.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +41,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Category category = rowItems.get(position);
-        Log.e(TAG, "onBindViewHolder: image url : " + NetworkUrls.ImageUrl + category.getIconPath());
+//        Log.e(TAG, "onBindViewHolder: image url : " + NetworkUrls.ImageUrl + category.getIconPath());
         Glide.with(mContext)
                 .load(NetworkUrls.ImageUrl + category.getIconPath())
                 .placeholder(R.drawable.placeholder)
@@ -54,6 +53,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, CategoryCouponList.class);
                 intent.putExtra("ServiceTypeId", category.getServiceTypeId());
+                intent.putExtra("ServiceTypeName", category.getServiceTypeName());
                 mContext.startActivity(intent);
             }
         });

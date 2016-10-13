@@ -44,6 +44,7 @@ public class CouponDetailActivity extends AppCompatActivity implements View.OnCl
     private EditText edtQuantity;
     private int quantity = 1;
     private int offerPrice;
+    private TextView tvTerms;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,6 +61,7 @@ public class CouponDetailActivity extends AppCompatActivity implements View.OnCl
         mContext = CouponDetailActivity.this;
 
         tvTitle = (TextView) findViewById(R.id.coupon_detail_tv_title);
+        tvTerms = (TextView) findViewById(R.id.coupon_detail_tv_terms);
         tvAddress = (TextView) findViewById(R.id.coupon_detail_tv_address);
         tvCouponPrice = (TextView) findViewById(R.id.coupon_detail_tv_coupon_price);
         tvOfferPrice = (TextView) findViewById(R.id.coupon_detail_tv_offer_price);
@@ -91,10 +93,12 @@ public class CouponDetailActivity extends AppCompatActivity implements View.OnCl
                 }
             }
         });
-        btnBuyNow = (Button) findViewById(R.id.coupon_detail_btn_buy_now);
+        btnBuyNow = (Button) findViewById(R.id.coupon_detail_btn_buy_now2);
         btnBuyNow.setOnClickListener(this);
 
         RegisterId = getIntent().getStringExtra("SRegisterId");
+        getSupportActionBar().setTitle(getIntent().getStringExtra("MerchantTitle"));
+        getSupportActionBar().setSubtitle(getIntent().getStringExtra("area"));
 
         if (Common.isNetworkAvailable(mContext)) {
             getCoupenDetailApiCall();
@@ -123,6 +127,7 @@ public class CouponDetailActivity extends AppCompatActivity implements View.OnCl
                     jobjServiceInfo.getString("ImageHeading");
                     jobjServiceInfo.getString("MerchantName");
                     jobjServiceInfo.getString("Area");
+                    jobjServiceInfo.getString("TermsCondition");
 
                     JSONObject jobjServiceOffers = datamodalJson.getJSONArray("tblServiceOffers").getJSONObject(0);
                     jobjServiceOffers.getString("SOfferId");
@@ -136,6 +141,8 @@ public class CouponDetailActivity extends AppCompatActivity implements View.OnCl
                     jobjServicePhotos.getString("PhotoPath");
 
                     offerPrice = Integer.parseInt(jobjServiceOffers.getString("OfferPrice"));
+
+                    tvTerms.setText(jobjServiceInfo.getString("TermsCondition"));
 
                     tvTitle.setText(jobjServiceInfo.getString("ImageHeading"));
                     tvAddress.setText(jobjServiceInfo.getString("Area"));
@@ -169,6 +176,10 @@ public class CouponDetailActivity extends AppCompatActivity implements View.OnCl
             quantity--;
             edtQuantity.setText(quantity + "");
         } else if (view == btnBuyNow) {
+            if (quantity == 0) {
+                Common.showAlertDialog(this, "", "You can not buy 0 items!", true, null);
+                return;
+            }
             if (Common.getBooleanPrefrences(this, getString(R.string.pref_Logedin), getString(R.string.app_name))) {
                 Common.showAlertDialog(this, "", "Thank you for buying coupon!!", true, null);
             } else {

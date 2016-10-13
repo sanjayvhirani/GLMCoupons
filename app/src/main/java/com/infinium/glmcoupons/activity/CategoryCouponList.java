@@ -58,6 +58,7 @@ public class CategoryCouponList extends AppCompatActivity {
         rvCoupenList.setAdapter(adapter);
 
         ServiceTypeId = getIntent().getStringExtra("ServiceTypeId");
+        getSupportActionBar().setTitle(getIntent().getStringExtra("ServiceTypeName"));
 
         if (Common.isNetworkAvailable(mContext)) {
             getCoupenListApiCall();

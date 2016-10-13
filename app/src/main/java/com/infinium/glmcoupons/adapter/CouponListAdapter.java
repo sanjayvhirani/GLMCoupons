@@ -48,7 +48,7 @@ public class CouponListAdapter extends RecyclerView.Adapter<CouponListAdapter.Vi
                 .into(holder.ivCoupon);
 
         holder.tvDiscount.setText(coupon.getShortHeading());
-        holder.tvCoupenTitle.setText(coupon.getMerchantTitle());
+        holder.tvCoupenTitle.setText(coupon.getMerchantName());
         holder.tvCoupenSubTitle.setText(coupon.getArea());
         holder.tvCoupenPrice.setText("₹" + coupon.getPrice());
         holder.tvCoupenPrice.setPaintFlags(holder.tvCoupenPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -59,6 +59,8 @@ public class CouponListAdapter extends RecyclerView.Adapter<CouponListAdapter.Vi
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, CouponDetailActivity.class);
                 intent.putExtra("SRegisterId", coupon.getSRegisterId());
+                intent.putExtra("MerchantTitle", coupon.getMerchantName());
+                intent.putExtra("area", coupon.getArea());
                 mContext.startActivity(intent);
             }
         });
